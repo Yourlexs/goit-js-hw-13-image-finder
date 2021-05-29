@@ -1,8 +1,10 @@
 import './sass/main.scss';
+import '../node_modules/basiclightbox/dist/basicLightbox.min.css';
 import imagesTpl from './templates/images.hbs';
 import ImagesApiService from './js/apiService';
 import LoadMoreBtn from './js/load-more-btn.js';
 import error from './js/pnotify';
+import * as basicLightbox from 'basiclightbox';
 
 var debounce = require('lodash.debounce');
 
@@ -20,6 +22,7 @@ const imageApiService = new ImagesApiService();
 
 refs.searchForm.addEventListener('input', debounce(onSearch, 500));
 loadMoreBtn.refs.button.addEventListener('click', fetchImages);
+refs.gallery.addEventListener('click',onOpenModal)
 
 function onSearch(e) {
     e.preventDefault();
@@ -51,3 +54,12 @@ function appendImagesMarkup(images) {
 function clearGallery() {
     refs.gallery.innerHTML = '';
 }
+
+function onOpenModal(e) {
+    const isElImg = e.target.classList.contains('gallery-image');
+    if (!isElImg) {
+        return;
+    }
+    const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
+    instance.show();
+};
