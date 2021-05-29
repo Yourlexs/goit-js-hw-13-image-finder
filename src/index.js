@@ -45,6 +45,11 @@ async function fetchImages() {
     const images = await imageApiService.fetchImages();
     appendImagesMarkup(images);
     loadMoreBtn.enable();
+
+    loadMoreBtn.refs.button.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+    });
 }
 
 function appendImagesMarkup(images) {
