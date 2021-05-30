@@ -18,6 +18,8 @@ const loadMoreBtn = new LoadMoreBtn({
     hidden: true,
 });
 
+let count = 0;
+
 const imageApiService = new ImagesApiService();
 
 refs.searchForm.addEventListener('input', debounce(onSearch, 500));
@@ -51,11 +53,14 @@ async function fetchImages() {
     }
     loadMoreBtn.enable();
 
+    count += 1;
 
-    loadMoreBtn.refs.button.scrollIntoView({
+    if (count > 1) {
+        loadMoreBtn.refs.button.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
     });
+    }
 }
 
 function appendImagesMarkup(images) {
