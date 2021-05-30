@@ -44,7 +44,13 @@ async function fetchImages() {
     
     const images = await imageApiService.fetchImages();
     appendImagesMarkup(images);
+
+    if (images.length < 12) {
+        loadMoreBtn.hide();
+        return;
+    }
     loadMoreBtn.enable();
+
 
     loadMoreBtn.refs.button.scrollIntoView({
         behavior: 'smooth',
